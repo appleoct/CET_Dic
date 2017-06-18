@@ -9,6 +9,7 @@
 #define _SQL_H
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <mysql/mysql.h>
 using namespace std;
 class SQL{
@@ -16,12 +17,13 @@ class SQL{
     SQL(string passwd,string filename = "words.txt"): _passwd(passwd),_filename(filename) {} 
     // get passwd & words file`s name
     ~SQL() {mysql_close(db);}               // close MySQL connect
+    int init_words_db();
     int connect_db();                       // connect MySQL Server
-    int txt2db();                           // store words to DB
     int query_words(string find_words);     // query_words
 
     private:
     int _query_db(string sql);
+    int _txt2db();                           // store words to DB
     string _filename;
     string _passwd;
     MYSQL *db;
@@ -29,9 +31,14 @@ class SQL{
     MYSQL_RES* result;
     MYSQL_FIELD* field; 
 };
+int SQL::init_words_db()
+{
+    return _txt2db();
+}
 int SQL::_query_db(string sql)
 {
-    if(mysql_query(db,sql.c_str())){
+    //if(mysql_query(db,sql.c_str())){
+    if(mysql_real_query(db,sql.c_str(),sql.size())){
         cout << "Query ERROR : " << mysql_error(db) << endl;
         return 1;
     }
@@ -48,9 +55,18 @@ int SQL::_query_db(string sql)
     return 0;
 
 }
-int SQL::txt2db()
+int SQL::_txt2db()
 {
+    ifstream words_file(_filename);
+    string en,zh;
+    while(!words_file.eof()){
+
+    words_file >> en >> zh;
+    string sql("INESERT INTO MyDic(en,zh) VALUES("+ en +"," + zh +")");
     
+    }
+
+    words_file.close();
 }
 int SQL::query_words(string find_words)
 {
