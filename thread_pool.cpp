@@ -13,7 +13,6 @@
 #include <memory>
 #include <atomic>
 #include <functional>
-//using namespace std;
 template <typename T>
 class SyncQueue{
 public:
@@ -137,12 +136,14 @@ class ThreadPool{
     {
         M_queue.Put(task);
     }
-    private:
     void Start(int numThreads)
     {
         m_running = true;
+        for(int i = 0;i < numThreads; ++i)
+            m_threadgroup.push_back(std::make_shared<std::thread>(&ThreadPool::RunInThread, this));
 
     }
+    private:
     void RunInThread()
     {
         while(m_running){
@@ -167,7 +168,7 @@ class ThreadPool{
     }
 
     std::list<std::shared_ptr<std::thread>> m_threadgroup;
-    SyncQueue<Task>        M_queue;
+    SyncQueue<Task>         M_queue;
     std::atomic_bool        m_running;
     std::once_flag          m_flag;
 };
@@ -175,14 +176,30 @@ void testThePool()
 {
     ThreadPool pool;
     pool.Start(2);
-    std:;thread thd1([&pool]{
+    std::cout << "start" << std::endl;
+    std::thread thd1([&pool]{
         for(int i = 0; i < 10; ++i){
-            
+            auto thdId =std::this_thread::get_id();
+            pool.AddTask([thdId]{std::cout << "同步层线程1的线程ID: " << thdId << std::endl;});
         }
-    })
+    });
+    std::thread thd2([&pool]{
+        for(int i = 0; i < 10; ++i){
+            auto thdId =std::this_thread::get_id();
+            pool.AddTask([thdId]{std::cout << "同步层线程2的线程ID:" << thdId << std::endl;});
+        }
+    });
+
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    getchar();
+    pool.Stop();
+    thd1.join();
+    thd2.join();
+
 }
+
 int main(void)
 {
-
+    testThePool();
     
 }
