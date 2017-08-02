@@ -5,7 +5,7 @@
  * > Created Time: 2017年07月19日 星期三 14时47分45秒
  */
  #include "thread_pool.h"
- #include "Factory.h"
+ #include "./factory.h"
  #include "server.h"
 
 
@@ -120,7 +120,8 @@ void SyncQueue<T>::Add(F &&x)
         m_notEmpty.notify_one();
     }
 
-
+// ThreadPool
+//
     void ThreadPool::Stop()
     {
         std::call_once(m_flag, [this]{StopThreadGroup();});
@@ -167,10 +168,13 @@ void SyncQueue<T>::Add(F &&x)
         char buffer[MAXSIZE];
         std::string job_type;
         Server::get_msg(fd,buffer,job_type); 
+        std::cout << buffer << std::endl;
 
+        
         Job *myjob = Factory::produce(job_type);
         myjob->dojob(buffer);
-
+        
+        std::cout << buffer << std::endl;
         Server::send_msg(fd,buffer);
         delete myjob;
     }

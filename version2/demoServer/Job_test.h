@@ -7,10 +7,14 @@
 
 #ifndef _JOB_TEST_H
 #define _JOB_TEST_H
-#include "./Job_base.hpp"
+#include "./Job_base.h"
+
+#include "./factory.h"
+#include <json/json.h>
 class Test_Job:public Job{
     public:
     Test_Job() { std::cout << "init Test_Job" << std::endl;}
-    int dojob(char *buffer) { std::cout << "do test job" << std::endl;};
+    int dojob(char *buffer) ;
 };
+REGISTER_ACTION(Test_Job, "Test_Job");
 #endif

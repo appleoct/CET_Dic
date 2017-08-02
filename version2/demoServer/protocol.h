@@ -24,5 +24,5 @@ enum JobType{
     TEST3,
 
 };
-const char *JobTypeFunc[3] = {"test1","test2","test3"};
+const char *JobTypeFunc[3] = {"Test_Job","test2","test3"};
 #endif

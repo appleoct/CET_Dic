@@ -7,24 +7,23 @@
  #include"./server.h"
  #include"./protocol.h"
  #include"./thread_pool.h"
+
+ #include "./factory.h"
 const char *DB_HOST = "127.0.0.1";
 const short DB_PORT = 6379;
 const int LEN = 5000;
-//const int MAXPOLLSIZE;
 const int MAXSIZE = 1000;
 const int MAXLINE = 100;
 
 int Server::get_msg(int fd, char *buffer, std::string& job_type)
 {
-    char key[4];
-    if(read(fd, key, 4) < 4)
+    struct Header myhead;
+    if(read(fd, &myhead, 4) < 4)
         return -1;
-    unsigned short len = *(unsigned short *)(&key[0]);
-    unsigned short type = *(unsigned short *)(&key[2]);
+    
+    job_type = std::string(JobTypeFunc[myhead.JobTypeCode]);
 
-    job_type = std::string(JobTypeFunc[type]);
-
-    if(read(fd,buffer, len) < len)
+    if(read(fd,buffer, myhead.packet_size) < myhead.packet_size)
         return -1;
     else
         return 0;
