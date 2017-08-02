@@ -8,9 +8,14 @@
 #include "./server.h"
 #include "./thread_pool.h"
 const short PORT = 5473;
-int main(void)
+int main(int argc, char **argv)
 {
-    ThreadPool::get_instance().Start(4);
+    int thread_nums;
+    if(!argv[1])
+        thread_nums = 0;
+    else
+        thread_nums = atoi(argv[1]);
+    ThreadPool::get_instance().Start(thread_nums);
     Server server(PORT);
     server.init_db();
     server.Listen();
