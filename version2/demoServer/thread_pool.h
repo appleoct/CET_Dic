@@ -12,7 +12,6 @@
 #include<atomic>
 #include<condition_variable>
 
-#include "./common.h"
 // 同步队列---我们采用模板类来实现
 template <typename T>
 class SyncQueue{
@@ -60,7 +59,7 @@ class ThreadPool{
 
     private:
 
-    ThreadPool(int numThreads = std::thread::hardware_concurrency()): M_queue(MaxTaskCount) { Start(numThreads); }
+    ThreadPool() :M_queue(MaxTaskCount) {};
     ThreadPool(const ThreadPool &) = delete;
     ThreadPool(ThreadPool &&) = delete;
 

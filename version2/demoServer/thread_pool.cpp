@@ -135,8 +135,13 @@ void SyncQueue<T>::Add(F &&x)
     }
     void ThreadPool::Start(int numThreads)
     {
+        int real_numThreads;
+        if(!numThreads)
+            real_numThreads = std::thread::hardware_concurrency();
+        else 
+            real_numThreads  = numThreads;
         m_running = true;
-        for(int i = 0;i < numThreads; ++i)
+        for(int i = 0;i < real_numThreads; ++i)
             m_threadgroup.push_back(std::make_shared<std::thread>(&ThreadPool::RunInThread, this));
 
     }

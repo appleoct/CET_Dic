@@ -7,6 +7,13 @@
  #include"./server.h"
  #include"./protocol.h"
  #include"./thread_pool.h"
+const char *DB_HOST = "127.0.0.1";
+const short DB_PORT = 6379;
+const int LEN = 5000;
+//const int MAXPOLLSIZE;
+const int MAXSIZE = 1000;
+const int MAXLINE = 100;
+
 int Server::get_msg(int fd, char *buffer, std::string& job_type)
 {
     char key[4];

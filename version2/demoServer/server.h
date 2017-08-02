@@ -22,7 +22,12 @@
 #include<hiredis.h>
 #include<string>
 #include<string.h>
-#include"./common.h"
+extern const char *DB_HOST ;
+extern const short DB_PORT;
+extern const int LEN;
+const int MAXPOLLSIZE  = 10000;
+extern const int MAXSIZE ;
+extern const int MAXLINE ;
 
 class Server{
     public:
