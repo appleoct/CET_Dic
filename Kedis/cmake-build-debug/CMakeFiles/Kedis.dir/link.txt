@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/Kedis.dir/main.cpp.o CMakeFiles/Kedis.dir/Network.cpp.o CMakeFiles/Kedis.dir/TheadPool.cpp.o CMakeFiles/Kedis.dir/Factory.cpp.o CMakeFiles/Kedis.dir/BaseJob.cpp.o CMakeFiles/Kedis.dir/JobTest.cpp.o  -o Kedis /usr/lib/libhiredis.a /usr/lib/libjsoncpp.a -lpthread 

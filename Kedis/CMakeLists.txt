@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.8)
+project(Kedis)
+
+set(CMAKE_CXX_STANDARD 11)
+LINK_LIBRARIES(/usr/lib/libhiredis.a)
+LINK_LIBRARIES(/usr/lib/libjsoncpp.a)
+LINK_LIBRARIES(/usr/lib/libpthread.so)
+INCLUDE_DIRECTORIES(/usr/local/include/redis)
+set(SOURCE_FILES main.cpp protocol.h network.h Network.cpp Network.h TheadPool.cpp TheadPool.h Factory.cpp Factory.h BaseJob.cpp BaseJob.h JobTest.cpp JobTest.h)
+add_executable(Kedis ${SOURCE_FILES})

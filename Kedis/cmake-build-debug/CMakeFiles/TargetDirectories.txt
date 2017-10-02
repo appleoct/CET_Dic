@@ -1,0 +1,3 @@
+/home/kang/src/MyDic/Kedis/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kang/src/MyDic/Kedis/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kang/src/MyDic/Kedis/cmake-build-debug/CMakeFiles/Kedis.dir
