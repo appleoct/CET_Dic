@@ -1,2 +1,4 @@
-language: cpp
+language: c
+complier: gcc
+script: ./version2/demoClient/make && make test
 
